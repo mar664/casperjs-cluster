@@ -1,0 +1,23 @@
+version: '2'
+services:
+  casperjs:
+   image: mar664/casperjs-container
+   expose:
+    - "5000"
+   volumes:
+    - /home/casperjs/scripts:/casperjs/scripts
+   entrypoint:
+    - /usr/bin/casperjs
+    - /casperjs/scripts/server.js
+   restart: always
+  lb:
+    image: dockercloud/haproxy
+    links:
+      - casperjs
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - EXTRA_FRONTEND_SETTINGS_80=acl allowed_page path_beg /render,acl allowed_page path_beg /capture,acl allowed_page path_beg /execute,block if !allowed_page
+      - BALANCE=leastconn
+    ports:
+      - 8585:80

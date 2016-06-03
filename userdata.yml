@@ -1,0 +1,12 @@
+#cloud-config
+package_upgrade: true
+packages:
+  - python-pip
+  - git
+runcmd:
+  - cd /home
+  - git clone https://github.com/mar664/casperjs-cluster.git
+  - mv casperjs-cluster/scripts /home/casperjs/scripts
+  - pip install docker-compose
+  - docker-compose up -d
+  - docker-compose scale casperjs=5
