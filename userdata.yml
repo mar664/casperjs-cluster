@@ -6,7 +6,6 @@ packages:
 runcmd:
   - cd /home
   - git clone https://github.com/mar664/casperjs-cluster.git
-  - mv casperjs-cluster/scripts /home/casperjs/scripts
   - cd casperjs-cluster
   - pip install docker-compose
   - docker-compose up -d

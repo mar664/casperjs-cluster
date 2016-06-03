@@ -5,7 +5,7 @@ services:
    expose:
     - "5000"
    volumes:
-    - /home/casperjs/scripts:/casperjs/scripts
+    - /home/casperjs-cluster/scripts:/casperjs/scripts
    entrypoint:
     - /usr/bin/casperjs
     - /casperjs/scripts/server.js
