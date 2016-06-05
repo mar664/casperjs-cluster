@@ -5,10 +5,9 @@ services:
    expose:
     - "5000"
    volumes:
-    - /home/casperjs-cluster/scripts:/casperjs/scripts
+    - /home/casperjs-cluster:/casperjs
    entrypoint:
-    - /usr/bin/casperjs
-    - /casperjs/scripts/server.js
+    - nohup python server.py &
    restart: always
   lb:
     image: dockercloud/haproxy
@@ -18,6 +17,6 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
       - EXTRA_FRONTEND_SETTINGS_80=acl allowed_page path_beg /render,acl allowed_page path_beg /capture,acl allowed_page path_beg /execute,block if !allowed_page
-      - BALANCE=leastconn
+      - BALANCE=url_param session_id
     ports:
       - 8585:80
