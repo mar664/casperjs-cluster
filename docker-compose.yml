@@ -7,7 +7,7 @@ services:
    volumes:
     - /home/casperjs-cluster:/casperjs
    entrypoint:
-    - nohup python server.py &
+    - nohup python /casperjs/server.py &
    restart: always
   lb:
     image: dockercloud/haproxy
